@@ -92,8 +92,8 @@ void DefineClassDec(const  char *line)
 	char className[LENGTH_MAX];
 	int indexLine, indexName;
 
-	/* Here indexLine is init to 6 because we skip the keyword : "class" and the space character (6 letters in total) */
-	for(indexLine = 6, indexName = 0; line[indexLine] != ' ' && !iscntrl(line[indexLine]); ++indexLine, ++indexName)
+	/* Here indexLine is init to 6 (CLASS_KEYWORD_LENGTH + 1) because we skip the keyword : "class" and the space character (6 letters in total) */
+	for(indexLine = CLASS_KEYWORD_LENGTH + 1, indexName = 0; line[indexLine] != ' ' && !iscntrl(line[indexLine]); ++indexLine, ++indexName)
 		className[indexName] = line[indexLine];
 
 	className[indexName] = '\0';
@@ -110,11 +110,13 @@ void DefineClassVarDec(const char *line, const int varKind)
 	char varType[LENGTH_MAX];
 	int indexLine, indexType, indexName;
 
-	/* Here indexLine is init to 7 or 6 (it depend on the variable kind : static or field) because we skip the keyword : "static" or "field" and the space character */
+	/* Here indexLine is init to STATIC_KEYWORD_LENGTH + 1 or FIELD_KEYWORD_LENGTH + 1
+	(it depend on the variable kind : static or field) because we skip the keyword : "static" or 
+	"field" and the space character */
 	if(varKind == STATIC_KIND)
-		indexLine = 7;
+		indexLine = STATIC_KEYWORD_LENGTH + 1;
 	else if(varKind == FIELD_KIND)
-		indexLine = 6;
+		indexLine = FIELD_KEYWORD_LENGTH + 1;
 
 	/* Get the variable type */
 	for(indexType = 0; line[indexLine] != ' '; ++indexType, ++indexLine)
@@ -163,17 +165,17 @@ void DefineSubroutineDec(const char *line, const int type)
 	{
 		case FUNCTION_SUB :
 			strcpy(subroutineType, "function");
-			indexLine = 9;
+			indexLine = FUNCTION_KEYWORD_LENGTH + 1;
 		break;
 
 		case CONSTRUCTOR_SUB :
 			strcpy(subroutineType, "constructor");
-			indexLine = 12;
+			indexLine = CONSTRUCTOR_KEYWORD_LENGTH + 1;
 		break;
 
 		case METHOD_SUB :
 			strcpy(subroutineType, "method");
-			indexLine = 7;
+			indexLine = METHOD_KEYWORD_LENGTH + 1;
 		break;
 	}
 

@@ -25,6 +25,6 @@ void cleanJackFile(const char *fileName);
 void prepareJackCompiler(void);
 
 
-void goThroughtDirectory(const char *directoryName, void (*pointer)(void));
+void goThroughDirectory(const char *directoryName, void (*pointer)(void));
 
 #endif
